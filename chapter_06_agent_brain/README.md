@@ -10,7 +10,7 @@ Prerequisite: complete one-time setup in `chapter_02_project_setup`.
 
 - `agentdesk_ai/agent.py`
 - `agentdesk_ai/tools.py`
-- `.env.example`
+- root `.env.example`
 
 ## What Command To Run
 

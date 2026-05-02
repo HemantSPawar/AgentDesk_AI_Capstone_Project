@@ -3,6 +3,7 @@
 ## What This Chapter Teaches
 
 You complete the full one-time setup for the entire course:
+- install Python on Windows
 - create and activate virtual environment
 - install all dependencies used across chapters 2 to 13
 - prepare environment variables safely
@@ -14,12 +15,51 @@ You complete the full one-time setup for the entire course:
 
 - `app.py`
 - `agentdesk_ai/agent.py`
-- `.env.example`
-- `requirements.txt`
+- root `.env.example`
+- root `requirements.txt`
 
 ## What Command To Run
 
-From inside `chapter_02_project_setup`:
+Recommended one-command Windows setup from the project root:
+
+```bash
+.\setup_windows.ps1
+```
+
+If PowerShell blocks the script, run:
+
+```bash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\setup_windows.ps1
+```
+
+If Python is installed by the script, close and reopen the terminal, then run `.\setup_windows.ps1` again.
+
+Alternative Python installer method:
+- Go to `https://www.python.org/downloads/`
+- Download the latest Python installer
+- Select `Add Python to PATH`
+- Click `Install Now`
+
+Manual setup commands, if you do not use the script:
+
+```bash
+winget install --id Python.Python.3.14 -e
+```
+
+Close and reopen the terminal, then verify Python:
+
+```bash
+python --version
+```
+
+Run the project setup commands from the project root, not inside each chapter folder:
+
+```bash
+cd "D:\Nexient\Projects\AgentDeskAI\AgentDesk_AI_Capstone_Project"
+```
+
+Create one shared virtual environment:
 
 ```bash
 python -m venv .venv
@@ -37,6 +77,7 @@ source .venv/bin/activate
 Install dependencies once for full course:
 
 ```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
@@ -52,6 +93,7 @@ cp .env.example .env
 Add your `OPENAI_API_KEY` in `.env`, then run:
 
 ```bash
+cd chapter_02_project_setup
 python app.py
 ```
 
@@ -72,12 +114,15 @@ Notes:
 
 - Terminal app starts successfully.
 - Message loop accepts user input and returns a placeholder JSON response.
-- No setup repetition needed in later chapters.
+- One `.venv` and one `.env` at the project root are reused by later chapters.
 - Environment is ready for real OpenAI RAG and real MCP workflow in upcoming chapters.
 
 ## Common Mistakes
 
-- Running commands outside this chapter folder.
+- Creating `.venv` separately inside every chapter folder.
+- Creating `.env` separately inside every chapter folder.
+- Forgetting to reopen terminal after installing Python.
+- Forgetting to add Python to PATH when using the installer.
 - Skipping virtual environment activation.
 - Forgetting to add `OPENAI_API_KEY` for LLM chapters.
 - Leaving `EMBEDDING_MODEL` unset when running semantic RAG chapters.

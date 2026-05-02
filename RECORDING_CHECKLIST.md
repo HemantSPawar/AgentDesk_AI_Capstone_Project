@@ -5,9 +5,10 @@ Use this checklist while recording each chapter lesson.
 ## Global Recording Rules
 
 - Show chapter folder path before coding.
-- Keep terminal focused on current chapter folder.
+- Keep setup terminal focused on project root in chapter 2.
+- Keep demo terminal focused on current chapter folder after setup is complete.
 - Use `.env.example`, never a real `.env` with live keys.
-- Do complete setup only once in chapter 2; do not repeat setup in later chapters.
+- Do complete setup only once from the project root in chapter 2; do not repeat setup in later chapters.
 - Hide private files, OneDrive folders, browser tabs, and unrelated project directories.
 - Do not show hidden system files.
 
@@ -20,8 +21,8 @@ Use this checklist while recording each chapter lesson.
 - Do not show: unrelated project files
 
 2. `chapter_02_project_setup`
-- Show: `README.md`, `app.py`
-- Run: `python -m venv .venv`, activate env, `pip install -r requirements.txt`, create `.env`, then `python app.py`
+- Show: `README.md`, `setup_windows.ps1`, `app.py`
+- Run: from project root, `.\setup_windows.ps1`, add API key to root `.env`, activate `.venv`, then `cd chapter_02_project_setup` and `python app.py`
 - Expect: setup complete message loop
 - Do not show: any real API keys
 
@@ -44,7 +45,7 @@ Use this checklist while recording each chapter lesson.
 - Do not show: final production polish files
 
 6. `chapter_06_agent_brain`
-- Show: `agentdesk_ai/agent.py`, `.env.example`
+- Show: `agentdesk_ai/agent.py`, root `.env.example`
 - Run: `python app.py`
 - Expect: LLM-generated structured response
 - Do not show: real `.env`

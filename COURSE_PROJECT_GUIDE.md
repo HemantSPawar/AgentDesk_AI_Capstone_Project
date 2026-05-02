@@ -5,10 +5,11 @@ This repository is now organized as a progressive, chapter-by-chapter capstone b
 ## How To Use This Course Project
 
 1. Start at `chapter_01_intro`.
-2. Complete each chapter in order.
-3. Run code inside each chapter folder only.
-4. Do not skip forward until the current chapter behavior is clear.
-5. Use `chapter_13_final_capstone` as the production-ready reference build.
+2. Complete one-time setup from the project root during `chapter_02_project_setup`.
+3. Complete each chapter in order.
+4. Run chapter demos from inside that chapter folder after activating the root `.venv`.
+5. Do not skip forward until the current chapter behavior is clear.
+6. Use `chapter_13_final_capstone` as the production-ready reference build.
 
 ## Chapter Map
 
@@ -30,12 +31,19 @@ This repository is now organized as a progressive, chapter-by-chapter capstone b
 
 - Never commit real secrets.
 - Use `.env.example` only.
-- Complete setup one time in `chapter_02_project_setup`.
+- Complete setup one time from the project root during `chapter_02_project_setup`.
 - After chapter 2, do not repeat environment setup in each chapter.
+- Use one root `.venv` and one root `.env` for the whole course.
+- Recommended Windows setup script:
+
+```bash
+.\setup_windows.ps1
+```
+
 - One-time dependency install command:
 
 ```bash
-pip install -r chapter_02_project_setup/requirements.txt
+pip install -r requirements.txt
 ```
 
 - Run each chapter from inside that chapter's directory.
