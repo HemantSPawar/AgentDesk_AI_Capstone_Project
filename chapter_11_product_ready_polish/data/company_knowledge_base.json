@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Pricing",
+    "content": "AgentDesk AI offers a starter plan for small businesses, a growth plan for teams, and an enterprise plan for custom integrations. For serious leads, suggest a demo call and collect their business type, expected monthly conversations, and required channels."
+  },
+  {
+    "title": "Integrations",
+    "content": "AgentDesk AI can integrate with websites, WhatsApp, email, CRM systems, and internal knowledge bases. Advanced integrations may require custom setup."
+  },
+  {
+    "title": "Activation Support",
+    "content": "If a customer has paid but their account is not active, apologize, collect payment email and transaction ID, and escalate to a human support specialist."
+  },
+  {
+    "title": "Demo Booking",
+    "content": "For high-intent leads, ask them to book a 30-minute demo. Collect company name, use case, number of users, and preferred contact details."
+  },
+  {
+    "title": "Refund Policy",
+    "content": "Refunds are reviewed case by case. If the customer is angry or mentions payment failure, escalate to human support."
+  }
+]

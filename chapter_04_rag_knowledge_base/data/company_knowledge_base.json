@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Pricing",
+    "content": "AgentDesk AI offers a starter plan for small businesses, a growth plan for teams, and an enterprise plan for custom integrations."
+  },
+  {
+    "title": "Integrations",
+    "content": "AgentDesk AI can integrate with websites, WhatsApp, email, CRM systems, and internal knowledge bases."
+  },
+  {
+    "title": "Activation Support",
+    "content": "If a customer has paid but their account is not active, apologize and escalate to human support."
+  },
+  {
+    "title": "Demo Booking",
+    "content": "For high-intent leads, ask them to book a 30-minute demo."
+  }
+]
