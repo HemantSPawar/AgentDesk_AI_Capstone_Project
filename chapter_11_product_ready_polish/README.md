@@ -4,6 +4,8 @@
 
 How to improve runtime reliability with response schema validation and safer fallbacks.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `agentdesk_ai/schema.py`

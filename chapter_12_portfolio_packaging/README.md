@@ -4,6 +4,8 @@
 
 How to present the capstone professionally with architecture notes, demo narrative, and setup clarity.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `README.md` (this chapter)

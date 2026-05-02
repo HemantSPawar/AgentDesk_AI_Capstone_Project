@@ -8,6 +8,8 @@ How to orchestrate complete customer message handling:
 - escalation decision
 - LLM reply generation
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `app.py`
@@ -23,12 +25,12 @@ python app.py
 
 ## What Student Should Observe
 
-- Full JSON workflow output from one customer input.
+- Full JSON workflow output from one customer input with semantic RAG grounding.
 - Behavior feels closer to a business-ready assistant.
 
 ## Common Mistakes
 
-- Running without `.env` configured from `.env.example`.
+- Running without `.env` configured during chapter 2 setup.
 - Misreading internal summary as customer-facing text.
 
 ## Connection To Next Chapter

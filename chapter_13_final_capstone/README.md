@@ -4,6 +4,8 @@
 
 This is the final, complete AgentDesk AI implementation.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `app.py`
@@ -15,7 +17,6 @@ This is the final, complete AgentDesk AI implementation.
 ## What Command To Run
 
 ```bash
-pip install -r requirements.txt
 python app.py
 ```
 
@@ -27,8 +28,8 @@ python scripts/test_mcp_tools.py
 
 ## What Student Should Observe
 
-- Full workflow: RAG + lead scoring + escalation + structured reply.
-- Reusable MCP tools for integration-ready architecture.
+- Full workflow: OpenAI embeddings-based RAG + lead scoring + escalation + structured reply.
+- Real MCP tools for integration-ready architecture.
 
 ## Common Mistakes
 

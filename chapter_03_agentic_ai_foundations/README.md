@@ -7,6 +7,8 @@ How to build a deterministic agent loop:
 - decide action
 - generate response
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `app.py`

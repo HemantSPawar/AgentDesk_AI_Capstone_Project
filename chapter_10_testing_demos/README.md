@@ -4,6 +4,8 @@
 
 How to run reliable demo cases and quick tool tests before presenting the project.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `scripts/test_mcp_tools.py`

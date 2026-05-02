@@ -5,8 +5,8 @@ A practical AI Business Agent for customer support and lead follow-up.
 ## What this capstone demonstrates
 
 - Agentic AI loop: understand, decide, use tools, respond
-- RAG over a company knowledge base
-- MCP-style tool server for reusable tools
+- OpenAI embeddings-based RAG over a company knowledge base
+- Real MCP tool server for reusable tools
 - Lead scoring and follow-up drafting
 - Human escalation and guardrails
 - Structured JSON output for business workflows

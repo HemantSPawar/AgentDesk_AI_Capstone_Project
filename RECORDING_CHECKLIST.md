@@ -7,6 +7,7 @@ Use this checklist while recording each chapter lesson.
 - Show chapter folder path before coding.
 - Keep terminal focused on current chapter folder.
 - Use `.env.example`, never a real `.env` with live keys.
+- Do complete setup only once in chapter 2; do not repeat setup in later chapters.
 - Hide private files, OneDrive folders, browser tabs, and unrelated project directories.
 - Do not show hidden system files.
 
@@ -20,7 +21,7 @@ Use this checklist while recording each chapter lesson.
 
 2. `chapter_02_project_setup`
 - Show: `README.md`, `app.py`
-- Run: `python app.py`
+- Run: `python -m venv .venv`, activate env, `pip install -r requirements.txt`, create `.env`, then `python app.py`
 - Expect: setup complete message loop
 - Do not show: any real API keys
 

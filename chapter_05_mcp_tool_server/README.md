@@ -2,7 +2,9 @@
 
 ## What This Chapter Teaches
 
-How to expose business tools using an MCP server abstraction.
+How to expose business tools using a real MCP server that can be integrated into OpenAI-driven agent workflows.
+
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
 
 ## Which Files To Open
 
@@ -19,11 +21,11 @@ python scripts/test_mcp_tools.py
 ## What Student Should Observe
 
 - Tool outputs for RAG search, lead scoring, and escalation checks.
-- Clear MCP tool definitions that wrap local Python logic.
+- Clear MCP tool definitions ready for real model orchestration.
 
 ## Common Mistakes
 
-- Forgetting to install `mcp` dependency.
+- Skipping chapter 2 setup and missing dependencies in the environment.
 - Renaming tool functions and breaking script calls.
 
 ## Connection To Next Chapter

@@ -2,7 +2,9 @@
 
 ## What This Chapter Teaches
 
-How to connect a company knowledge base and return grounded context using simple retrieval.
+How to connect a company knowledge base and return grounded context using OpenAI embeddings-based semantic retrieval.
+
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
 
 ## Which Files To Open
 
@@ -20,12 +22,12 @@ python app.py
 ## What Student Should Observe
 
 - Replies now reference KB results.
-- Retrieval chooses top matching entries by keyword overlap.
+- Retrieval chooses top matching entries by semantic similarity.
 
 ## Common Mistakes
 
 - Editing KB JSON into invalid format.
-- Confusing keyword RAG with embedding/vector RAG.
+- Forgetting `OPENAI_API_KEY`, causing fallback retrieval behavior.
 
 ## Connection To Next Chapter
 

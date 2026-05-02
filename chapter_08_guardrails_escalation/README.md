@@ -4,6 +4,8 @@
 
 How to harden agent behavior with risk-aware escalation and stricter response constraints.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `agentdesk_ai/tools.py`

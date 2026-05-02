@@ -15,8 +15,8 @@ This repository is now organized as a progressive, chapter-by-chapter capstone b
 1. `chapter_01_intro`: Capstone scope and learning outcome.
 2. `chapter_02_project_setup`: Environment setup and first runnable CLI loop.
 3. `chapter_03_agentic_ai_foundations`: Intent -> decision -> response pattern.
-4. `chapter_04_rag_knowledge_base`: Add knowledge-base retrieval (simple RAG).
-5. `chapter_05_mcp_tool_server`: Expose tools using an MCP server.
+4. `chapter_04_rag_knowledge_base`: Add OpenAI embeddings-based semantic RAG.
+5. `chapter_05_mcp_tool_server`: Expose real MCP tools for OpenAI-compatible orchestration.
 6. `chapter_06_agent_brain`: Add LLM-based response synthesis.
 7. `chapter_07_end_to_end_workflow`: Complete working flow with RAG + scoring + escalation.
 8. `chapter_08_guardrails_escalation`: Strengthen escalation and safety behavior.
@@ -30,10 +30,12 @@ This repository is now organized as a progressive, chapter-by-chapter capstone b
 
 - Never commit real secrets.
 - Use `.env.example` only.
-- Install dependencies per chapter:
+- Complete setup one time in `chapter_02_project_setup`.
+- After chapter 2, do not repeat environment setup in each chapter.
+- One-time dependency install command:
 
 ```bash
-pip install -r requirements.txt
+pip install -r chapter_02_project_setup/requirements.txt
 ```
 
 - Run each chapter from inside that chapter's directory.

@@ -4,6 +4,8 @@
 
 How to add structured lead follow-up planning based on intent and lead score.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `agentdesk_ai/tools.py`

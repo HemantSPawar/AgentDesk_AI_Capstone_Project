@@ -4,6 +4,8 @@
 
 How to use an LLM to convert internal context into a business-ready structured JSON response.
 
+Prerequisite: complete one-time setup in `chapter_02_project_setup`.
+
 ## Which Files To Open
 
 - `agentdesk_ai/agent.py`
@@ -13,7 +15,6 @@ How to use an LLM to convert internal context into a business-ready structured J
 ## What Command To Run
 
 ```bash
-pip install -r requirements.txt
 python app.py
 ```
 
