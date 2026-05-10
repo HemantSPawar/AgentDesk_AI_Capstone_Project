@@ -1,0 +1,39 @@
+{
+  "counter": 1,
+  "tickets": [
+    {
+      "ticket_id": "CASE-20260510-0001",
+      "status": "ASSIGNED_TO_HUMAN",
+      "created_at": "2026-05-10T16:19:16.308271+00:00",
+      "updated_at": "2026-05-10T16:19:16.308271+00:00",
+      "customer_message": "Customer cannot activate account after payment",
+      "normalized_message": "customer cannot activate account after payment",
+      "intent": "activation_issue",
+      "lead_score": 4,
+      "escalation_reason": "High urgency or sensitive customer issue",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": null,
+      "assignee": "L2_SUPPORT_QUEUE",
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace trace-demo",
+          "actor": "ai_agent",
+          "ts": "2026-05-10T16:19:16.308271+00:00"
+        },
+        {
+          "step": "TICKET_CREATED",
+          "note": "Case created in human support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-10T16:19:16.308271+00:00"
+        },
+        {
+          "step": "ASSIGNED_TO_HUMAN",
+          "note": "Assigned to L2 support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-10T16:19:16.308271+00:00"
+        }
+      ]
+    }
+  ]
+}

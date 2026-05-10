@@ -1,0 +1,155 @@
+[
+  {
+    "message": "I paid yesterday but my account is still not activated. This is frustrating.",
+    "agent_result": {
+      "intent": "customer_support",
+      "lead_score": 3,
+      "customer_reply": "Thanks for reaching out. We reviewed your request and will help you promptly. A support specialist will follow up where needed.",
+      "internal_summary": "Fallback response used for message: I paid yesterday but my account is still not activated. This is frustrating.",
+      "should_escalate": true,
+      "escalation_reason": "High urgency or sensitive customer issue",
+      "next_action": "Escalate to human queue",
+      "confidence": 0.55
+    },
+    "trace": {
+      "trace_id": "f4c35bbb-a025-421f-abc6-b05b8fea0937",
+      "mode": "local_mcp_stdio",
+      "tools": {
+        "knowledge_base": {
+          "tool": "search_knowledge_base",
+          "results": [
+            {
+              "title": "Activation Support",
+              "content": "If a customer has paid but their account is not active, apologize, collect payment email and transaction ID, and escalate to a human support specialist."
+            },
+            {
+              "title": "Refund Policy",
+              "content": "Refunds are reviewed case by case. If the customer is angry or mentions payment failure, escalate to human support."
+            },
+            {
+              "title": "Integrations",
+              "content": "AgentDesk AI can integrate with websites, WhatsApp, email, CRM systems, and internal knowledge bases. Advanced integrations may require custom setup."
+            }
+          ]
+        },
+        "lead_score": {
+          "tool": "score_lead",
+          "lead_score": 3
+        },
+        "escalation": {
+          "tool": "decide_escalation",
+          "should_escalate": true,
+          "reason": "High urgency or sensitive customer issue"
+        },
+        "mode": "local_mcp_stdio"
+      },
+      "guardrails": {
+        "should_escalate": true,
+        "reason": "High urgency or sensitive customer issue",
+        "risk_flags": []
+      }
+    }
+  },
+  {
+    "message": "We are evaluating for a 50-person team and need CRM and WhatsApp integration.",
+    "agent_result": {
+      "intent": "customer_support",
+      "lead_score": 5,
+      "customer_reply": "Thanks for reaching out. We reviewed your request and will help you promptly. A support specialist will follow up where needed.",
+      "internal_summary": "Fallback response used for message: We are evaluating for a 50-person team and need CRM and WhatsApp integration.",
+      "should_escalate": false,
+      "escalation_reason": "No policy escalation required",
+      "next_action": "Send AI response and monitor",
+      "confidence": 0.55
+    },
+    "trace": {
+      "trace_id": "ff38ed97-588c-46fd-a2cf-190239e08537",
+      "mode": "local_mcp_stdio",
+      "tools": {
+        "knowledge_base": {
+          "tool": "search_knowledge_base",
+          "results": [
+            {
+              "title": "Integrations",
+              "content": "AgentDesk AI can integrate with websites, WhatsApp, email, CRM systems, and internal knowledge bases. Advanced integrations may require custom setup."
+            },
+            {
+              "title": "Pricing",
+              "content": "AgentDesk AI offers a starter plan for small businesses, a growth plan for teams, and an enterprise plan for custom integrations. For serious leads, suggest a demo call and collect their business type, expected monthly conversations, and required channels."
+            },
+            {
+              "title": "Demo Booking",
+              "content": "For high-intent leads, ask them to book a 30-minute demo. Collect company name, use case, number of users, and preferred contact details."
+            }
+          ]
+        },
+        "lead_score": {
+          "tool": "score_lead",
+          "lead_score": 5
+        },
+        "escalation": {
+          "tool": "decide_escalation",
+          "should_escalate": false,
+          "reason": "Safe for AI response"
+        },
+        "mode": "local_mcp_stdio"
+      },
+      "guardrails": {
+        "should_escalate": false,
+        "reason": "Safe for AI response",
+        "risk_flags": []
+      }
+    }
+  },
+  {
+    "message": "Send me your pricing and setup timeline for enterprise rollout.",
+    "agent_result": {
+      "intent": "customer_support",
+      "lead_score": 8,
+      "customer_reply": "Thanks for reaching out. We reviewed your request and will help you promptly. A support specialist will follow up where needed.",
+      "internal_summary": "Fallback response used for message: Send me your pricing and setup timeline for enterprise rollout.",
+      "should_escalate": false,
+      "escalation_reason": "No policy escalation required",
+      "next_action": "Send AI response and monitor",
+      "confidence": 0.55
+    },
+    "trace": {
+      "trace_id": "e1386d42-612f-4271-88b2-2cfd31a85e2b",
+      "mode": "local_mcp_stdio",
+      "tools": {
+        "knowledge_base": {
+          "tool": "search_knowledge_base",
+          "results": [
+            {
+              "title": "Pricing",
+              "content": "AgentDesk AI offers a starter plan for small businesses, a growth plan for teams, and an enterprise plan for custom integrations. For serious leads, suggest a demo call and collect their business type, expected monthly conversations, and required channels."
+            },
+            {
+              "title": "Demo Booking",
+              "content": "For high-intent leads, ask them to book a 30-minute demo. Collect company name, use case, number of users, and preferred contact details."
+            },
+            {
+              "title": "Integrations",
+              "content": "AgentDesk AI can integrate with websites, WhatsApp, email, CRM systems, and internal knowledge bases. Advanced integrations may require custom setup."
+            }
+          ]
+        },
+        "lead_score": {
+          "tool": "score_lead",
+          "lead_score": 8
+        },
+        "escalation": {
+          "tool": "decide_escalation",
+          "should_escalate": false,
+          "reason": "Safe for AI response"
+        },
+        "mode": "local_mcp_stdio"
+      },
+      "guardrails": {
+        "should_escalate": false,
+        "reason": "Safe for AI response",
+        "risk_flags": []
+      }
+    }
+  }
+]

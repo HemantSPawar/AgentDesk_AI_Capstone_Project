@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ app_name }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c111d;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --line: #233048;
+      --brand: #22c55e;
+      --brand-2: #10b981;
+      --danger: #ef4444;
+      --user: #1f2937;
+      --assistant: #0b1325;
+    }
+
+    body {
+      background: radial-gradient(1200px 500px at 10% -10%, #1e293b 0%, var(--bg) 42%) fixed;
+      color: var(--text);
+      font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+      min-height: 100vh;
+    }
+
+    .shell {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar, .insights {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border-right: 1px solid var(--line);
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .insights {
+      border-right: 0;
+      border-left: 1px solid var(--line);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .badge-soft {
+      background: rgba(34, 197, 94, 0.15);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+
+    .card-dark {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+
+    .chat-wrap {
+      height: calc(100vh - 170px);
+      overflow-y: auto;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.45);
+    }
+
+    .msg {
+      max-width: 88%;
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--line);
+      white-space: pre-wrap;
+    }
+
+    .msg-user {
+      margin-left: auto;
+      background: var(--user);
+    }
+
+    .msg-assistant {
+      margin-right: auto;
+      background: var(--assistant);
+    }
+
+    .msg-meta {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .compose {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(17, 24, 39, 0.82);
+    }
+
+    .form-control, .form-select {
+      background: #0b1220;
+      color: var(--text);
+      border: 1px solid #334155;
+    }
+
+    .form-control:focus, .form-select:focus {
+      background: #0b1220;
+      color: var(--text);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.18);
+    }
+
+    .btn-agent {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color: #062814;
+      font-weight: 700;
+      border: 0;
+    }
+
+    .list-clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .list-clean li {
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+    }
+
+    .list-clean li:last-child {
+      border-bottom: 0;
+    }
+
+    .tiny {
+      font-size: 0.84rem;
+      color: var(--muted);
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
+      background: #0a1020;
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+    }
+
+    pre {
+      color: #dbeafe;
+      background: #050a18;
+      border: 1px solid #223357;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #22c55e;
+      margin-right: 8px;
+    }
+
+    .status-pill {
+      border: 1px solid #334155;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      background: #0b1220;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid shell">
+    <div class="row h-100">
+      <aside class="col-12 col-lg-3 sidebar p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="brand">{{ app_name }}</div>
+          <span class="badge badge-soft">Live</span>
+        </div>
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">Workspace</div>
+          <div class="tiny">Use this console to send customer messages and review agent outputs with tool-backed evidence.</div>
+        </div>
+        <div class="card-dark p-3">
+          <div class="fw-semibold mb-2">MCP Runtime</div>
+          <ul class="list-clean">
+            <li class="tiny"><strong>Protocol:</strong> MCP over stdio</li>
+            <li class="tiny"><strong>Tool disclosure:</strong> from live `list_tools()`</li>
+            <li class="tiny"><strong>LLM:</strong> OpenAI reasoning + RAG</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="col-12 col-lg-6 p-3 p-lg-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h1 class="h5 m-0">Agent Runtime Console</h1>
+          <span class="tiny"><span class="status-dot"></span>Live orchestration view</span>
+        </div>
+
+        <div class="chat-wrap mb-3">
+          {% if customer_message %}
+          <div class="msg msg-user">
+            <div class="msg-meta">Customer Input</div>
+            {{ customer_message }}
+          </div>
+          {% else %}
+          <div class="msg msg-assistant">
+            <div class="msg-meta">System</div>
+            Ready for live demo. Submit a customer message to run orchestration, tool calls, guardrails, and response generation.
+          </div>
+          {% endif %}
+
+          {% if result %}
+          <div class="msg msg-assistant">
+            <div class="msg-meta">Agent Response</div>
+            <strong>Intent:</strong> {{ result.intent }}
+            <br><strong>Lead Score:</strong> {{ result.lead_score }}
+            <br><strong>Escalate:</strong> {{ result.should_escalate }}
+            <br><strong>Confidence:</strong> {{ result.confidence }}
+            <hr class="border-secondary">
+            <strong>Customer Reply</strong>
+            <br>{{ result.customer_reply }}
+            <hr class="border-secondary">
+            <strong>Internal Summary</strong>
+            <br>{{ result.internal_summary }}
+            <hr class="border-secondary">
+            <strong>Escalation Reason:</strong> {{ result.escalation_reason }}
+            <br><strong>Next Action:</strong> {{ result.next_action }}
+          </div>
+          {% endif %}
+        </div>
+
+        <form method="post" action="/chat" class="compose">
+          <div class="mb-3">
+            <label class="form-label tiny">Customer Message</label>
+            <textarea class="form-control" name="customer_message" rows="3" placeholder="Example: We paid but account activation failed and our team is blocked.">{{ customer_message or '' }}</textarea>
+          </div>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label tiny">Execution Mode</label>
+              <input class="form-control" value="Real MCP + OpenAI RAG (single production path)" disabled>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button class="btn btn-agent px-4">Run Agent</button>
+          </div>
+          {% if error %}
+          <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+          {% endif %}
+        </form>
+      </main>
+
+      <aside class="col-12 col-lg-3 insights p-3">
+        <div class="fw-semibold mb-3">Execution Insights</div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="kpi">
+              <div class="tiny">Cases</div>
+              <div>{{ tickets|length if tickets else 0 }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="kpi">
+              <div class="tiny">Escalation</div>
+              <div>{% if result %}{{ result.should_escalate }}{% else %}--{% endif %}</div>
+            </div>
+          </div>
+        </div>
+        {% if trace %}
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">Guardrail Decision</div>
+          <div class="tiny mb-2">Reason</div>
+          <div>{{ trace.guardrails.reason }}</div>
+          <div class="tiny mt-3 mb-2">Risk Flags</div>
+          <div>
+            {% if trace.guardrails.risk_flags %}
+              {{ trace.guardrails.risk_flags | join(", ") }}
+            {% else %}
+              None
+            {% endif %}
+          </div>
+        </div>
+        <div class="card-dark p-3">
+          <div class="fw-semibold mb-2">Trace Payload</div>
+          <pre>{{ trace | tojson(indent=2) }}</pre>
+        </div>
+        {% else %}
+        <div class="card-dark p-3 tiny">
+          Trace and tool evidence will appear here after the first run.
+        </div>
+        {% endif %}
+
+        <div class="card-dark p-3 mt-3">
+          <div class="fw-semibold mb-2">Case Board</div>
+          {% if success %}
+          <div class="alert alert-success py-2">{{ success }}</div>
+          {% endif %}
+          <div class="tiny mb-2">Latest escalations and handoff lifecycle</div>
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Status</th>
+                  <th>Lead</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for t in tickets or [] %}
+                <tr>
+                  <td class="tiny">{{ t.ticket_id }}</td>
+                  <td><span class="status-pill">{{ t.status }}</span></td>
+                  <td class="tiny">{{ t.lead_score }}</td>
+                </tr>
+              {% else %}
+                <tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {% if selected_ticket %}
+        <div class="card-dark p-3 mt-3">
+          <div class="fw-semibold mb-2">Selected Case: {{ selected_ticket.ticket_id }}</div>
+          <div class="tiny mb-2">Current Status: {{ selected_ticket.status }}</div>
+          <form method="post" action="/ticket/action" class="mb-3">
+            <input type="hidden" name="ticket_id" value="{{ selected_ticket.ticket_id }}">
+            <label class="form-label tiny">Action</label>
+            <select class="form-select mb-2" name="action">
+              <option value="human_action">HUMAN_ACTION_TAKEN</option>
+              <option value="notify_customer">CUSTOMER_NOTIFIED</option>
+              <option value="close_case">CASE_CLOSED</option>
+              <option value="mark_duplicate">DUPLICATE</option>
+            </select>
+            <label class="form-label tiny">Note</label>
+            <input class="form-control mb-2" name="note" placeholder="Optional note">
+            <label class="form-label tiny">Duplicate Of (for duplicate action)</label>
+            <input class="form-control mb-2" name="duplicate_of" placeholder="CASE-YYYYMMDD-0001">
+            <button class="btn btn-agent w-100">Apply Action</button>
+          </form>
+          <div class="tiny mb-2">Timeline</div>
+          <pre>{{ selected_ticket.timeline | tojson(indent=2) }}</pre>
+        </div>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
