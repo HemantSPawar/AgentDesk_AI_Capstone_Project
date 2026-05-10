@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentDesk AI Final Capstone - Simulated Demo View</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c111d;
+      --panel: #111827;
+      --panel-2: #0f172a;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --line: #233048;
+      --brand: #22c55e;
+      --brand-2: #10b981;
+      --user: #1f2937;
+      --assistant: #0b1325;
+    }
+    body {
+      background: radial-gradient(1200px 500px at 10% -10%, #1e293b 0%, var(--bg) 42%) fixed;
+      color: var(--text);
+      font-family: "Segoe UI", "Inter", "Roboto", sans-serif;
+      min-height: 100vh;
+    }
+    .shell { height: 100vh; overflow: hidden; }
+    .sidebar, .insights {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border-right: 1px solid var(--line);
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .insights { border-right: 0; border-left: 1px solid var(--line); }
+    .brand { font-weight: 700; letter-spacing: 0.2px; }
+    .badge-soft {
+      background: rgba(34, 197, 94, 0.15);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+    .card-dark {
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .chat-wrap {
+      height: calc(100vh - 170px);
+      overflow-y: auto;
+      padding: 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.45);
+    }
+    .msg {
+      max-width: 88%;
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--line);
+      white-space: pre-wrap;
+    }
+    .msg-user { margin-left: auto; background: var(--user); }
+    .msg-assistant { margin-right: auto; background: var(--assistant); }
+    .msg-meta { color: var(--muted); font-size: 0.8rem; margin-bottom: 0.35rem; }
+    .compose {
+      margin-top: 1rem;
+      padding: 0.9rem;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(17, 24, 39, 0.82);
+    }
+    .form-control, .form-select {
+      background: #0b1220;
+      color: var(--text);
+      border: 1px solid #334155;
+    }
+    .btn-agent {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      color: #062814;
+      font-weight: 700;
+      border: 0;
+    }
+    .tiny { font-size: 0.84rem; color: var(--muted); }
+    .kpi {
+      border: 1px solid var(--line);
+      background: #0a1020;
+      border-radius: 12px;
+      padding: 0.7rem 0.8rem;
+    }
+    pre {
+      color: #dbeafe;
+      background: #050a18;
+      border: 1px solid #223357;
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 0.8rem;
+      max-height: 300px;
+      overflow: auto;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #22c55e;
+      margin-right: 8px;
+    }
+    .status-pill {
+      border: 1px solid #334155;
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      background: #0b1220;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid shell">
+    <div class="row h-100">
+      <aside class="col-12 col-lg-3 sidebar p-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="brand">AgentDesk AI Final Capstone</div>
+          <span class="badge badge-soft">Simulated Live</span>
+        </div>
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">One-Click Demo Scenarios</div>
+          <div class="tiny mb-2">Frontend-only simulation for recording visuals.</div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-sm btn-outline-light text-start scenario-btn" data-key="activation">Activation Failure</button>
+            <button class="btn btn-sm btn-outline-light text-start scenario-btn" data-key="refund">Refund Complaint</button>
+            <button class="btn btn-sm btn-outline-light text-start scenario-btn" data-key="enterprise">Enterprise Lead</button>
+            <button class="btn btn-sm btn-outline-light text-start scenario-btn" data-key="duplicate">Duplicate Case</button>
+            <button class="btn btn-sm btn-outline-light text-start scenario-btn" data-key="legal">Legal/Security Escalation</button>
+          </div>
+        </div>
+        <div class="card-dark p-3">
+          <div class="fw-semibold mb-2">MCP Runtime</div>
+          <ul class="mb-0">
+            <li class="tiny"><strong>Protocol:</strong> MCP over HTTP (remote)</li>
+            <li class="tiny"><strong>Tool disclosure:</strong> live list_tools()</li>
+            <li class="tiny"><strong>LLM:</strong> OpenAI reasoning + RAG</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="col-12 col-lg-6 p-3 p-lg-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h1 class="h5 m-0">Agent Runtime Console</h1>
+          <span class="tiny"><span class="status-dot"></span>Simulated chat behavior</span>
+        </div>
+
+        <div id="chatWrap" class="chat-wrap mb-3">
+          <div class="msg msg-assistant">
+            <div class="msg-meta">System</div>
+            This demo page simulates streaming responses and case lifecycle updates without backend calls.
+          </div>
+        </div>
+
+        <form id="chatForm" class="compose">
+          <div class="mb-3">
+            <label class="form-label tiny">Customer Message</label>
+            <textarea id="customerMessage" class="form-control" rows="3" placeholder="Type your message and press Send..."></textarea>
+          </div>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label tiny">Execution Mode</label>
+              <input class="form-control" value="Remote MCP + OpenAI RAG (single production path)" disabled>
+            </div>
+            <div class="col-12">
+              <label class="form-label tiny">Remote MCP URL</label>
+              <input class="form-control" value="https://your-remote-mcp.example.com/mcp" disabled>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button id="sendBtn" class="btn btn-agent px-4" type="submit">Send</button>
+          </div>
+        </form>
+      </main>
+
+      <aside class="col-12 col-lg-3 insights p-3">
+        <div class="fw-semibold mb-3">Execution Insights</div>
+        <div class="row g-2 mb-3">
+          <div class="col-6">
+            <div class="kpi">
+              <div class="tiny">Cases</div>
+              <div id="caseCount">0</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="kpi">
+              <div class="tiny">Escalation</div>
+              <div id="escalationNow">--</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">Guardrail Decision</div>
+          <div class="tiny mb-2">Reason</div>
+          <div id="guardrailReason">No run yet</div>
+          <div class="tiny mt-3 mb-2">Risk Flags</div>
+          <div id="riskFlags">None</div>
+        </div>
+
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">Trace Payload</div>
+          <pre id="tracePayload">{
+  "trace_id": null,
+  "mode": "remote_mcp_http",
+  "tools_disclosed": []
+}</pre>
+        </div>
+
+        <div class="card-dark p-3 mb-3">
+          <div class="fw-semibold mb-2">Case Board</div>
+          <div class="tiny mb-2">Latest escalations and handoff lifecycle</div>
+          <div class="table-responsive">
+            <table class="table table-dark table-sm align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Status</th>
+                  <th>Lead</th>
+                </tr>
+              </thead>
+              <tbody id="caseRows">
+                <tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card-dark p-3">
+          <div class="fw-semibold mb-2">Selected Case</div>
+          <div class="tiny mb-2">Current Status: <span id="selectedStatus">--</span></div>
+          <div class="mb-3">
+            <label class="form-label tiny">Action</label>
+            <select id="caseAction" class="form-select mb-2">
+              <option value="HUMAN_ACTION_TAKEN">HUMAN_ACTION_TAKEN</option>
+              <option value="CUSTOMER_NOTIFIED">CUSTOMER_NOTIFIED</option>
+              <option value="CASE_CLOSED">CASE_CLOSED</option>
+              <option value="DUPLICATE">DUPLICATE</option>
+            </select>
+            <button id="applyActionBtn" class="btn btn-agent w-100" type="button">Apply Action</button>
+          </div>
+          <div class="tiny mb-2">Timeline</div>
+          <pre id="caseTimeline">[]</pre>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    const scenarios = {
+      activation: {
+        message: "I paid yesterday but my account is still not activated. This is frustrating.",
+        intent: "activation_issue",
+        lead: 3,
+        escalate: true,
+        reason: "High urgency or sensitive customer issue",
+        riskFlags: []
+      },
+      refund: {
+        message: "I want a refund now. Your service failed and I am very angry.",
+        intent: "refund_complaint",
+        lead: 4,
+        escalate: true,
+        reason: "Policy escalation due to payment/refund sensitivity",
+        riskFlags: []
+      },
+      enterprise: {
+        message: "We are a 120-person team and need enterprise pricing with CRM and WhatsApp integration.",
+        intent: "enterprise_pricing",
+        lead: 8,
+        escalate: false,
+        reason: "Safe for AI response",
+        riskFlags: []
+      },
+      duplicate: {
+        message: "I paid yesterday but my account is still not activated. This is frustrating.",
+        intent: "activation_issue",
+        lead: 3,
+        escalate: true,
+        reason: "Duplicate detected against existing open case",
+        riskFlags: []
+      },
+      legal: {
+        message: "We found a potential data breach and legal notice may follow. Escalate immediately.",
+        intent: "security_legal_risk",
+        lead: 6,
+        escalate: true,
+        reason: "Policy escalation due to: legal_risk, security_risk",
+        riskFlags: ["legal_risk", "security_risk"]
+      }
+    };
+
+    let cases = [];
+    let selectedCaseId = null;
+    let caseCounter = 0;
+
+    const chatWrap = document.getElementById("chatWrap");
+    const customerMessage = document.getElementById("customerMessage");
+    const chatForm = document.getElementById("chatForm");
+    const sendBtn = document.getElementById("sendBtn");
+    const escalationNow = document.getElementById("escalationNow");
+    const guardrailReason = document.getElementById("guardrailReason");
+    const riskFlags = document.getElementById("riskFlags");
+    const tracePayload = document.getElementById("tracePayload");
+    const caseRows = document.getElementById("caseRows");
+    const caseCount = document.getElementById("caseCount");
+    const selectedStatus = document.getElementById("selectedStatus");
+    const caseTimeline = document.getElementById("caseTimeline");
+    const caseAction = document.getElementById("caseAction");
+    const applyActionBtn = document.getElementById("applyActionBtn");
+
+    function nowIso() {
+      return new Date().toISOString();
+    }
+
+    function nextCaseId() {
+      caseCounter += 1;
+      const today = new Date().toISOString().slice(0,10).replaceAll("-","");
+      return `CASE-${today}-${String(caseCounter).padStart(4, "0")}`;
+    }
+
+    function appendMessage(role, title, text) {
+      const div = document.createElement("div");
+      div.className = role === "user" ? "msg msg-user" : "msg msg-assistant";
+      div.innerHTML = `<div class="msg-meta">${title}</div><div class="msg-body"></div>`;
+      div.querySelector(".msg-body").textContent = text;
+      chatWrap.appendChild(div);
+      chatWrap.scrollTop = chatWrap.scrollHeight;
+      return div.querySelector(".msg-body");
+    }
+
+    async function streamText(el, text) {
+      el.textContent = "";
+      const words = text.split(" ");
+      for (let i = 0; i < words.length; i++) {
+        el.textContent += (i ? " " : "") + words[i];
+        if (i % 3 === 0) await new Promise((r) => setTimeout(r, 22));
+      }
+    }
+
+    function renderCases() {
+      caseCount.textContent = String(cases.length);
+      if (!cases.length) {
+        caseRows.innerHTML = '<tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>';
+        selectedStatus.textContent = "--";
+        caseTimeline.textContent = "[]";
+        return;
+      }
+      caseRows.innerHTML = "";
+      cases.slice().reverse().forEach((c) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td class="tiny">${c.ticket_id}</td><td><span class="status-pill">${c.status}</span></td><td class="tiny">${c.lead_score}</td>`;
+        tr.style.cursor = "pointer";
+        tr.onclick = () => selectCase(c.ticket_id);
+        caseRows.appendChild(tr);
+      });
+      if (!selectedCaseId) selectCase(cases[cases.length - 1].ticket_id);
+    }
+
+    function selectCase(ticketId) {
+      selectedCaseId = ticketId;
+      const c = cases.find((x) => x.ticket_id === ticketId);
+      if (!c) return;
+      selectedStatus.textContent = c.status;
+      caseTimeline.textContent = JSON.stringify(c.timeline, null, 2);
+    }
+
+    function applyCaseAction(action) {
+      const c = cases.find((x) => x.ticket_id === selectedCaseId);
+      if (!c) return;
+      c.status = action;
+      c.timeline.push({ step: action, actor: "human_agent", ts: nowIso(), note: "Simulated action applied" });
+      renderCases();
+      selectCase(c.ticket_id);
+    }
+
+    function simulateTrace(result, ticket) {
+      const trace = {
+        trace_id: crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2),
+        mode: "remote_mcp_http",
+        tools: {
+          remote_tools: ["rag_search", "lead_score", "escalation_check"],
+          lead_score: { lead_score: result.lead },
+          escalation: { should_escalate: result.escalate }
+        },
+        guardrails: {
+          should_escalate: result.escalate,
+          reason: result.reason,
+          risk_flags: result.riskFlags
+        },
+        selected_ticket: ticket ? ticket.ticket_id : null
+      };
+      tracePayload.textContent = JSON.stringify(trace, null, 2);
+    }
+
+    async function runScenario(message, result) {
+      appendMessage("user", "Customer Input", message);
+      const assistantBody = appendMessage("assistant", "Agent Response", "Thinking...");
+      sendBtn.disabled = true;
+      sendBtn.textContent = "Running...";
+
+      const reply =
+`Intent: ${result.intent}
+Lead Score: ${result.lead}
+Escalate: ${result.escalate}
+Confidence: 0.86
+
+Customer Reply:
+Thanks for reaching out. We are reviewing this now and will provide a timely update.
+
+Internal Summary:
+Simulated demo response generated from MCP tools and guardrails.
+
+Escalation Reason: ${result.reason}
+Next Action: ${result.escalate ? "Escalate to human queue" : "Send AI response and monitor"}`;
+
+      await streamText(assistantBody, reply);
+      escalationNow.textContent = String(result.escalate);
+      guardrailReason.textContent = result.reason;
+      riskFlags.textContent = result.riskFlags.length ? result.riskFlags.join(", ") : "None";
+
+      let created = null;
+      if (result.escalate) {
+        const duplicateOf = cases.find((c) => c.normalized_message === message.toLowerCase().trim() && c.status !== "CASE_CLOSED");
+        created = {
+          ticket_id: nextCaseId(),
+          status: duplicateOf ? "DUPLICATE" : "ASSIGNED_TO_HUMAN",
+          lead_score: result.lead,
+          normalized_message: message.toLowerCase().trim(),
+          timeline: [
+            { step: "AI_DECISION_COMPLETE", actor: "ai_agent", ts: nowIso() },
+            { step: "TICKET_CREATED", actor: "workflow_engine", ts: nowIso() },
+            { step: duplicateOf ? "DUPLICATE" : "ASSIGNED_TO_HUMAN", actor: "workflow_engine", ts: nowIso(), note: duplicateOf ? `Duplicate of ${duplicateOf.ticket_id}` : "Assigned to L2 queue" }
+          ]
+        };
+        cases.push(created);
+      }
+      renderCases();
+      if (created) selectCase(created.ticket_id);
+      simulateTrace(result, created);
+      sendBtn.disabled = false;
+      sendBtn.textContent = "Send";
+    }
+
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = customerMessage.value.trim();
+      if (!message) return;
+      customerMessage.value = "";
+      await runScenario(message, scenarios.enterprise);
+    });
+
+    document.querySelectorAll(".scenario-btn").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const key = btn.dataset.key;
+        const scenario = scenarios[key];
+        await runScenario(scenario.message, scenario);
+      });
+    });
+
+    applyActionBtn.addEventListener("click", () => {
+      if (!selectedCaseId) return;
+      applyCaseAction(caseAction.value);
+    });
+  </script>
+</body>
+</html>
+

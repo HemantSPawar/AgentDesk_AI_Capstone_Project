@@ -15,15 +15,13 @@ This capstone combines all subchapters from 6 to 13 into one enterprise-style im
 
 - `app.py` - Flask app with Bootstrap UI
 - `agentdesk_ai/agent.py` - end-to-end agent orchestration
-- `agentdesk_ai/mcp_client.py` - local/remote MCP client flows
-- `agentdesk_ai/mcp_server.py` - local MCP tool server
+- `agentdesk_ai/mcp_client.py` - remote MCP client flow
 - `agentdesk_ai/tools.py` - tool business logic
 - `agentdesk_ai/rag.py` - embeddings retrieval
 - `agentdesk_ai/guardrails.py` - policy checks and escalation overrides
 - `agentdesk_ai/ticketing.py` - case lifecycle engine (`AI_DECISION_COMPLETE -> CASE_CLOSED`)
 - `agentdesk_ai/schema.py` - response schemas
 - `templates/index.html` - Bootstrap UI
-- `scripts/test_local_mcp.py` - local capstone test
 - `scripts/test_remote_mcp.py` - remote capstone test
 - `scripts/run_demo_cases.py` - batch demo/eval runner
 
@@ -44,12 +42,12 @@ EMBEDDING_MODEL=text-embedding-3-small
 REMOTE_MCP_URL=http://127.0.0.1:3010/mcp
 ```
 
-## Run Local Capstone MCP
+## Run Remote MCP Capstone
 
 From chapter folder:
 
 ```bash
-python scripts/test_local_mcp.py
+python scripts/test_remote_mcp.py http://127.0.0.1:3010/mcp
 ```
 
 ## Run Bootstrap UI
@@ -75,7 +73,7 @@ This saves a report JSON inside `outputs/`.
 ## Notes
 
 - This capstone is branch-safe and does not require any push to `main`.
-- Local retrieval uses OpenAI embeddings directly (no fallback path).
+- Retrieval uses OpenAI embeddings directly (no fallback path).
 - UI now includes end-to-end ticket lifecycle controls:
   - `TICKET_CREATED`
   - `ASSIGNED_TO_HUMAN`

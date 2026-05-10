@@ -5,7 +5,7 @@ This guide shows practical no-cost deployment paths for the AgentDesk AI capston
 ## Deployment Goals
 
 - Run Flask app publicly
-- Keep MCP server and app process alive
+- Connect app to a remote MCP server endpoint
 - Store case lifecycle state (`tickets.json`)
 - Keep secrets outside source code
 
@@ -35,6 +35,7 @@ pip install -r requirements.txt
    - `OPENAI_API_KEY`
    - `MODEL`
    - `EMBEDDING_MODEL`
+   - `REMOTE_MCP_URL`
 7. Run app with Gunicorn:
 
 ```bash
@@ -87,8 +88,8 @@ gunicorn -w 2 -b 0.0.0.0:5050 app:app
 
 ## Final Recommendation
 
-For a free but reliable “enterprise-style” demo stack:
+For a free but reliable "enterprise-style" demo stack:
 - Host on Oracle Cloud Always Free VM
 - Use Nginx + Gunicorn
 - Keep OpenAI key in env
-- Run capstone UI + MCP server in the same app environment
+- Connect capstone UI to a stable remote MCP server URL

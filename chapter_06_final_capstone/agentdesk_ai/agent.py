@@ -69,13 +69,13 @@ Return JSON only.
     return parsed
 
 
-def run_agent(customer_message: str, mode: str = "local", remote_url: str | None = None) -> tuple[AgentResponse, TraceBundle]:
+def run_agent(customer_message: str, remote_url: str | None = None) -> tuple[AgentResponse, TraceBundle]:
     trace_id = str(uuid.uuid4())
     try:
-        tools_payload = call_capstone_tools(customer_message, mode=mode, remote_url=remote_url)
+        tools_payload = call_capstone_tools(customer_message, remote_url=remote_url)
     except Exception as exc:
         tools_payload = {
-            "mode": f"{mode}_degraded",
+            "mode": "remote_degraded",
             "knowledge_base": {"tool": "search_knowledge_base", "results": []},
             "lead_score": {"tool": "score_lead", "lead_score": 1},
             "escalation": {
@@ -114,7 +114,7 @@ def run_agent(customer_message: str, mode: str = "local", remote_url: str | None
 
     trace = TraceBundle(
         trace_id=trace_id,
-        mode=tools_payload.get("mode", mode),
+        mode=tools_payload.get("mode", "remote_mcp_http"),
         tools=tools_payload,
         guardrails=guardrail_decision,
     )
