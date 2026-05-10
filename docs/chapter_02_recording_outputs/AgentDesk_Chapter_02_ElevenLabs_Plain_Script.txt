@@ -2,17 +2,22 @@ Welcome back. In the previous section, we understood what we are building: Agent
 <break time="1.0s" />
 Now we will move from concept to setup. In this section, we will prepare the complete VS Code project environment so that we can start building the agent step by step.
 <break time="1.0s" />
-Please do not skip this part. Many beginners fail in AI projects not because the agent logic is difficult, but because the setup is messy. API keys are in the wrong place, packages are missing, project folders are confusing, or files are not organized properly.
+Please 
+do not skip this part. Many beginners fail in AI projects not because the agent logic is difficult, but because the setup is messy. API keys are in the wrong place, packages are missing, project folders are confusing, or files are not organized properly.
 <break time="1.5s" />
-So our goal in this part is simple: create a clean setup, understand the project folders, prepare the environment file safely, and make sure our terminal is ready before we write the main agent logic.
+So our goal 
+in this part is simple: create a clean setup, understand the project folders, prepare the environment file safely, and make sure our terminal is ready before we write the main agent logic.
 <break time="1.5s" />
-Before we run anything, let me explain the project mindset. We are not building a random script. We are building a mini product.
+Before
+ we run anything, let me explain the project mindset. We are not building a random script. We are building a mini product.
 <break time="1.0s" />
 That means our code should be organized. The knowledge base should be separate from the agent logic. The tools should be separate from the user interface. The MCP server should be separate from the main application. The configuration should be separate from the code.
 <break time="1.5s" />
-This separation is very important in real-world agentic AI systems. If everything is written inside one giant Python file, the project may work for a demo, but it becomes difficult to maintain, test, and explain.
+This separation is 
+very important in real-world agentic AI systems. If everything is written inside one giant Python file, the project may work for a demo, but it becomes difficult to maintain, test, and explain.
 <break time="1.0s" />
-AgentDesk AI will be simple, but it will follow the same design thinking used in real production systems: clean folders, reusable tools, clear prompts, real RAG, real MCP, and safe configuration.
+AgentDesk AI will be
+ simple, but it will follow the same design thinking used in real production systems: clean folders, reusable tools, clear prompts, real RAG, real MCP, and safe configuration.
 <break time="1.5s" />
 Now let us open the project folder in VS Code. The project is organized chapter by chapter, so each lesson has its own folder. But setup will happen only once at the root of the project.
 <break time="1.0s" />
@@ -24,7 +29,7 @@ If Python is not installed, the script uses winget to install Python on Windows.
 <break time="1.0s" />
 This keeps setup simple for students. Instead of remembering many commands, they can run one setup script from the project root.
 <break time="1.5s" />
-The virtual environment is important because it keeps this project?s Python packages separate from other projects on the system. When we build AI projects, package versions matter. A virtual environment prevents one project from breaking another project.
+The virtual environment is important because it keeps this project's Python packages separate from other projects on the system. When we build AI projects, package versions matter. A virtual environment prevents one project from breaking another project.
 <break time="1.0s" />
 After the virtual environment is created, the script upgrades pip and installs the packages from the root requirements file.
 <break time="1.0s" />

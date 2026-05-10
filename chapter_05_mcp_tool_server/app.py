@@ -1,1 +1,1 @@
-print("Chapter 05 focuses on MCP tools. Run: python scripts/test_mcp_tools.py")
+print("Chapter 05 covers real MCP local + remote setup. See README.md for full run guide.")

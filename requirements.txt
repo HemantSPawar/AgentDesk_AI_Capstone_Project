@@ -1,4 +1,7 @@
+# Use this file from a VS Code local virtual environment (.venv), not Anaconda.
 openai>=1.40.0
 python-dotenv>=1.0.1
 mcp>=1.2.0
 pydantic>=2.7.0
+requests>=2.31.0
+urllib3>=2.0.0

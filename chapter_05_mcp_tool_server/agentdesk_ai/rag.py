@@ -19,19 +19,6 @@ def load_knowledge_base():
         return json.load(file)
 
 
-def _keyword_fallback(query, docs, top_k):
-    query_words = set(query.lower().split())
-    scored = []
-
-    for doc in docs:
-        text = (doc["title"] + " " + doc["content"]).lower()
-        score = sum(1 for word in query_words if word in text)
-        scored.append((score, doc))
-
-    scored.sort(key=lambda item: item[0], reverse=True)
-    return [doc for score, doc in scored[:top_k] if score > 0] or docs[:top_k]
-
-
 def _embed_texts(texts):
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
@@ -63,12 +50,8 @@ def _load_kb_vectors(docs):
 
 def simple_rag_search(query, top_k=2):
     docs = load_knowledge_base()
-    try:
-        query_vector = _embed_texts([query])[0]
-        kb_vectors = _load_kb_vectors(docs)
-        scored = [( _cosine_similarity(query_vector, doc_vector), doc) for doc, doc_vector in kb_vectors]
-        scored.sort(key=lambda item: item[0], reverse=True)
-        return [doc for _, doc in scored[:top_k]]
-    except Exception:
-        # Keep a deterministic fallback so early lessons remain runnable offline.
-        return _keyword_fallback(query, docs, top_k)
+    query_vector = _embed_texts([query])[0]
+    kb_vectors = _load_kb_vectors(docs)
+    scored = [(_cosine_similarity(query_vector, doc_vector), doc) for doc, doc_vector in kb_vectors]
+    scored.sort(key=lambda item: item[0], reverse=True)
+    return [doc for _, doc in scored[:top_k]]
