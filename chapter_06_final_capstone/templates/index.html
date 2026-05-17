@@ -32,6 +32,10 @@
       overflow: hidden;
     }
 
+    .shell .row {
+      height: 100%;
+    }
+
     .sidebar, .insights {
       background: linear-gradient(180deg, var(--panel), var(--panel-2));
       border-right: 1px solid var(--line);
@@ -62,7 +66,8 @@
     }
 
     .chat-wrap {
-      height: calc(100vh - 170px);
+      flex: 1 1 auto;
+      min-height: 52vh;
       overflow-y: auto;
       padding: 1.25rem;
       border: 1px solid var(--line);
@@ -96,11 +101,44 @@
     }
 
     .compose {
-      margin-top: 1rem;
+      margin-top: 0.9rem;
       padding: 0.9rem;
       border-radius: 14px;
       border: 1px solid var(--line);
       background: rgba(17, 24, 39, 0.82);
+      position: sticky;
+      bottom: 0;
+      z-index: 5;
+      backdrop-filter: blur(4px);
+    }
+
+    .runtime-pill {
+      border: 1px solid #334155;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      background: #0b1220;
+      display: inline-block;
+    }
+
+    @media (min-width: 992px) {
+      .chat-wrap {
+        max-height: calc(100vh - 240px);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .shell {
+        height: auto;
+        overflow: visible;
+      }
+      .sidebar, .insights {
+        height: auto;
+      }
+      .chat-wrap {
+        min-height: 52vh;
+      }
     }
 
     .form-control, .form-select {
@@ -185,7 +223,7 @@
   <div class="container-fluid shell">
     <div class="row h-100">
       <aside class="col-12 col-lg-3 sidebar p-3">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1">
           <div class="brand">{{ app_name }}</div>
           <span class="badge badge-soft">Live</span>
         </div>
@@ -217,13 +255,13 @@
         </div>
       </aside>
 
-      <main class="col-12 col-lg-6 p-3 p-lg-4">
+      <main class="col-12 col-lg-6 p-3 p-lg-4 d-flex flex-column h-100">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h1 class="h5 m-0">Agent Runtime Console</h1>
           <span class="tiny"><span class="status-dot"></span>Live orchestration view</span>
         </div>
 
-        <div id="chatWrap" class="chat-wrap mb-3">
+        <div id="chatWrap" class="chat-wrap mb-2">
           {% if customer_message %}
           <div class="msg msg-user">
             <div class="msg-meta">Customer Input</div>
@@ -259,23 +297,41 @@
           {% endif %}
         </div>
 
-        <form id="chatForm" method="post" action="/chat" class="compose">
+        <div class="card-dark p-3 mb-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="fw-semibold">Live Trace</div>
+            <span class="tiny">Always visible</span>
+          </div>
+          <div class="tiny mt-2 mb-1">Guardrail Reason</div>
+          <div id="centerGuardrailReason">{% if trace %}{{ trace.guardrails.reason }}{% else %}--{% endif %}</div>
+          <div class="tiny mt-2 mb-1">Risk Flags</div>
+          <div id="centerGuardrailFlags">
+            {% if trace and trace.guardrails.risk_flags %}
+              {{ trace.guardrails.risk_flags | join(", ") }}
+            {% else %}
+              None
+            {% endif %}
+          </div>
+          <div class="tiny mt-3 mb-1">Trace JSON</div>
+          <pre id="centerTracePayload">{% if trace %}{{ trace | tojson(indent=2) }}{% else %}Trace and tool evidence will appear here after the first run.{% endif %}</pre>
+        </div>
+
+        <form id="chatForm" method="post" action="/chat" class="compose mt-auto">
           <div class="mb-3">
             <label class="form-label tiny">Customer Message</label>
-            <textarea id="customerMessage" class="form-control" name="customer_message" rows="3" placeholder="Type your message and press Send...">{{ customer_message or '' }}</textarea>
+            <textarea id="customerMessage" class="form-control" name="customer_message" rows="2" placeholder="Message AgentDesk AI... (Enter to send, Shift+Enter for new line)">{{ customer_message or '' }}</textarea>
           </div>
-          <div class="row g-3">
-            <div class="col-12">
-              <label class="form-label tiny">Execution Mode</label>
-              <input class="form-control" value="Remote MCP + OpenAI RAG (single production path)" disabled>
-            </div>
-            <div class="col-12">
-              <label class="form-label tiny">Remote MCP URL</label>
+          <div class="mb-2">
+            <span class="runtime-pill">Remote MCP + OpenAI RAG</span>
+          </div>
+          <div class="row g-2 align-items-end">
+            <div class="col-12 col-md-8">
+              <label class="form-label tiny mb-1">Remote MCP URL</label>
               <input id="remoteUrl" class="form-control" name="remote_url" value="{{ remote_url or 'http://127.0.0.1:3010/mcp' }}">
             </div>
-          </div>
-          <div class="mt-3 d-flex gap-2">
-            <button id="sendBtn" class="btn btn-agent px-4">Send</button>
+            <div class="col-12 col-md-4 d-grid">
+              <button id="sendBtn" class="btn btn-agent px-4" type="submit">Send</button>
+            </div>
           </div>
           {% if error %}
           <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
@@ -284,29 +340,33 @@
       </main>
 
       <aside class="col-12 col-lg-3 insights p-3">
-        <div class="fw-semibold mb-3">Execution Insights</div>
-        <div class="row g-2 mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="fw-semibold">Execution Insights</div>
+          <form method="post" action="/ticket/clear" onsubmit="return confirm('Clear all ticket data? This cannot be undone.');">
+            <button type="submit" class="btn btn-sm btn-outline-danger">Clear All Data</button>
+          </form>
+        </div>
+        <div class="row g-2 mb-1">
           <div class="col-6">
             <div class="kpi">
               <div class="tiny">Cases</div>
-              <div>{{ tickets|length if tickets else 0 }}</div>
+              <div id="kpiCases">{{ tickets|length if tickets else 0 }}</div>
             </div>
           </div>
           <div class="col-6">
             <div class="kpi">
               <div class="tiny">Escalation</div>
-              <div>{% if result %}{{ result.should_escalate }}{% else %}--{% endif %}</div>
+              <div id="kpiEscalation">{% if result %}{{ result.should_escalate }}{% else %}--{% endif %}</div>
             </div>
           </div>
         </div>
-        {% if trace %}
-        <div class="card-dark p-3 mb-3">
+        <div class="card-dark p-3 mt-0 mb-1">
           <div class="fw-semibold mb-2">Guardrail Decision</div>
           <div class="tiny mb-2">Reason</div>
-          <div>{{ trace.guardrails.reason }}</div>
+          <div id="guardrailReason">{% if trace %}{{ trace.guardrails.reason }}{% else %}--{% endif %}</div>
           <div class="tiny mt-3 mb-2">Risk Flags</div>
-          <div>
-            {% if trace.guardrails.risk_flags %}
+          <div id="guardrailFlags">
+            {% if trace and trace.guardrails.risk_flags %}
               {{ trace.guardrails.risk_flags | join(", ") }}
             {% else %}
               None
@@ -315,13 +375,8 @@
         </div>
         <div class="card-dark p-3">
           <div class="fw-semibold mb-2">Trace Payload</div>
-          <pre>{{ trace | tojson(indent=2) }}</pre>
+          <pre id="tracePayload">{% if trace %}{{ trace | tojson(indent=2) }}{% else %}Trace and tool evidence will appear here after the first run.{% endif %}</pre>
         </div>
-        {% else %}
-        <div class="card-dark p-3 tiny">
-          Trace and tool evidence will appear here after the first run.
-        </div>
-        {% endif %}
 
         <div class="card-dark p-3 mt-3">
           <div class="fw-semibold mb-2">Case Board</div>
@@ -338,16 +393,16 @@
                   <th>Lead</th>
                 </tr>
               </thead>
-              <tbody>
-              {% for t in tickets or [] %}
-                <tr>
-                  <td class="tiny">{{ t.ticket_id }}</td>
-                  <td><span class="status-pill">{{ t.status }}</span></td>
-                  <td class="tiny">{{ t.lead_score }}</td>
-                </tr>
-              {% else %}
-                <tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>
-              {% endfor %}
+              <tbody id="casesTableBody">
+                {% for t in tickets or [] %}
+                  <tr>
+                    <td class="tiny">{{ t.ticket_id }}</td>
+                    <td><span class="status-pill">{{ t.status }}</span></td>
+                    <td class="tiny">{{ t.lead_score }}</td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
@@ -386,6 +441,15 @@
     const customerMessage = document.getElementById("customerMessage");
     const remoteUrl = document.getElementById("remoteUrl");
     const sendBtn = document.getElementById("sendBtn");
+    const kpiCases = document.getElementById("kpiCases");
+    const kpiEscalation = document.getElementById("kpiEscalation");
+    const casesTableBody = document.getElementById("casesTableBody");
+    const tracePayload = document.getElementById("tracePayload");
+    const guardrailReason = document.getElementById("guardrailReason");
+    const guardrailFlags = document.getElementById("guardrailFlags");
+    const centerTracePayload = document.getElementById("centerTracePayload");
+    const centerGuardrailReason = document.getElementById("centerGuardrailReason");
+    const centerGuardrailFlags = document.getElementById("centerGuardrailFlags");
 
     function appendMessage(role, title, content) {
       const div = document.createElement("div");
@@ -430,6 +494,10 @@
           return;
         }
         const r = data.result;
+        kpiEscalation.textContent = String(r.should_escalate);
+        kpiCases.textContent = String((data.tickets || []).length);
+        renderCasesTable(data.tickets || []);
+        renderTracePanel(data.trace || {});
         const formatted =
 `Intent: ${r.intent}
 Lead Score: ${r.lead_score}
@@ -453,12 +521,53 @@ Next Action: ${r.next_action}`;
       }
     }
 
+    function renderCasesTable(tickets) {
+      if (!casesTableBody) return;
+      if (!tickets.length) {
+        casesTableBody.innerHTML = `<tr><td colspan="3" class="tiny text-secondary">No cases yet</td></tr>`;
+        return;
+      }
+      casesTableBody.innerHTML = tickets
+        .map(
+          (t) => `<tr>
+            <td class="tiny">${t.ticket_id || ""}</td>
+            <td><span class="status-pill">${t.status || ""}</span></td>
+            <td class="tiny">${t.lead_score ?? ""}</td>
+          </tr>`
+        )
+        .join("");
+    }
+
+    function renderTracePanel(trace) {
+      if (!tracePayload) return;
+      tracePayload.textContent = JSON.stringify(trace, null, 2);
+      const reason = trace?.guardrails?.reason || "--";
+      const flags = Array.isArray(trace?.guardrails?.risk_flags) && trace.guardrails.risk_flags.length
+        ? trace.guardrails.risk_flags.join(", ")
+        : "None";
+      if (guardrailReason) guardrailReason.textContent = reason;
+      if (guardrailFlags) guardrailFlags.textContent = flags;
+      if (centerTracePayload) centerTracePayload.textContent = JSON.stringify(trace, null, 2);
+      if (centerGuardrailReason) centerGuardrailReason.textContent = reason;
+      if (centerGuardrailFlags) centerGuardrailFlags.textContent = flags;
+    }
+
     chatForm.addEventListener("submit", async (e) => {
       e.preventDefault();
       const message = customerMessage.value.trim();
       if (!message) return;
       customerMessage.value = "";
       await runAgentMessage(message);
+    });
+
+    customerMessage.addEventListener("keydown", async (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        const message = customerMessage.value.trim();
+        if (!message) return;
+        customerMessage.value = "";
+        await runAgentMessage(message);
+      }
     });
 
     document.querySelectorAll(".scenario-btn").forEach((btn) => {

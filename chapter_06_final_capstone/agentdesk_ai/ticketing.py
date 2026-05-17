@@ -129,3 +129,6 @@ def apply_ticket_action(ticket_id: str, action: str, note: str = "", duplicate_o
         return ticket
     return None
 
+
+def clear_all_tickets() -> None:
+    _save_store({"counter": 0, "tickets": []})

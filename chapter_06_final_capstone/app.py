@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template, request
 
 from agentdesk_ai.agent import run_agent
 from agentdesk_ai.config import settings
-from agentdesk_ai.ticketing import apply_ticket_action, create_handoff_case, get_ticket, list_tickets
+from agentdesk_ai.ticketing import apply_ticket_action, clear_all_tickets, create_handoff_case, get_ticket, list_tickets
 
 app = Flask(__name__)
 
@@ -123,6 +123,19 @@ def ticket_action():
         demo_scenarios=DEMO_SCENARIOS,
         selected_ticket=selected_ticket or get_ticket(ticket_id),
         success=f"Action '{action}' applied to {ticket_id}" if selected_ticket else f"No changes applied for {ticket_id}",
+    )
+
+
+@app.post("/ticket/clear")
+def ticket_clear():
+    clear_all_tickets()
+    return render_template(
+        "index.html",
+        app_name=settings.app_name,
+        tickets=list_tickets(limit=25),
+        demo_scenarios=DEMO_SCENARIOS,
+        remote_url=settings.remote_mcp_url,
+        success="All ticket data cleared.",
     )
 
 

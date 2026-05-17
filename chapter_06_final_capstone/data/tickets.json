@@ -1,37 +1,251 @@
 {
-  "counter": 1,
+  "counter": 8,
   "tickets": [
     {
-      "ticket_id": "CASE-20260510-0001",
+      "ticket_id": "CASE-20260517-0001",
       "status": "ASSIGNED_TO_HUMAN",
-      "created_at": "2026-05-10T16:19:16.308271+00:00",
-      "updated_at": "2026-05-10T16:19:16.308271+00:00",
-      "customer_message": "Customer cannot activate account after payment",
-      "normalized_message": "customer cannot activate account after payment",
-      "intent": "activation_issue",
-      "lead_score": 4,
-      "escalation_reason": "High urgency or sensitive customer issue",
+      "created_at": "2026-05-17T07:23:09.490199+00:00",
+      "updated_at": "2026-05-17T07:23:09.490199+00:00",
+      "customer_message": "I paid yesterday but my account is still not activated. This is frustrating.",
+      "normalized_message": "i paid yesterday but my account is still not activated. this is frustrating.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
       "next_action": "Escalate to human queue",
       "duplicate_of": null,
       "assignee": "L2_SUPPORT_QUEUE",
       "timeline": [
         {
           "step": "AI_DECISION_COMPLETE",
-          "note": "AI marked escalation=True for trace trace-demo",
+          "note": "AI marked escalation=True for trace 2fb27216-0d24-452b-bcad-088dd2ecb920",
           "actor": "ai_agent",
-          "ts": "2026-05-10T16:19:16.308271+00:00"
+          "ts": "2026-05-17T07:23:09.490199+00:00"
         },
         {
           "step": "TICKET_CREATED",
           "note": "Case created in human support queue",
           "actor": "workflow_engine",
-          "ts": "2026-05-10T16:19:16.308271+00:00"
+          "ts": "2026-05-17T07:23:09.490199+00:00"
         },
         {
           "step": "ASSIGNED_TO_HUMAN",
           "note": "Assigned to L2 support queue",
           "actor": "workflow_engine",
-          "ts": "2026-05-10T16:19:16.308271+00:00"
+          "ts": "2026-05-17T07:23:09.490199+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0002",
+      "status": "ASSIGNED_TO_HUMAN",
+      "created_at": "2026-05-17T07:24:46.739354+00:00",
+      "updated_at": "2026-05-17T07:24:46.739354+00:00",
+      "customer_message": "I want a refund now. Your service failed and I am very angry.",
+      "normalized_message": "i want a refund now. your service failed and i am very angry.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": null,
+      "assignee": "L2_SUPPORT_QUEUE",
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace 50649921-7f9b-4857-94fb-a381e5fe6f44",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T07:24:46.739354+00:00"
+        },
+        {
+          "step": "TICKET_CREATED",
+          "note": "Case created in human support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T07:24:46.739354+00:00"
+        },
+        {
+          "step": "ASSIGNED_TO_HUMAN",
+          "note": "Assigned to L2 support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T07:24:46.739354+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0003",
+      "status": "DUPLICATE",
+      "created_at": "2026-05-17T07:41:23.317560+00:00",
+      "updated_at": "2026-05-17T07:41:23.317560+00:00",
+      "customer_message": "I paid yesterday but my account is still not activated. This is frustrating.",
+      "normalized_message": "i paid yesterday but my account is still not activated. this is frustrating.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": "CASE-20260517-0001",
+      "assignee": null,
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace c4865c78-fbd3-470c-af30-4a10d7d07a0a",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T07:41:23.317560+00:00"
+        },
+        {
+          "step": "DUPLICATE",
+          "note": "Marked as duplicate of CASE-20260517-0001",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T07:41:23.317560+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0004",
+      "status": "DUPLICATE",
+      "created_at": "2026-05-17T16:32:19.895188+00:00",
+      "updated_at": "2026-05-17T16:32:19.895188+00:00",
+      "customer_message": "I paid yesterday but my account is still not activated. This is frustrating.",
+      "normalized_message": "i paid yesterday but my account is still not activated. this is frustrating.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": "CASE-20260517-0001",
+      "assignee": null,
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace d997d250-c126-45b0-ba6c-ff5ce11786f5",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T16:32:19.895188+00:00"
+        },
+        {
+          "step": "DUPLICATE",
+          "note": "Marked as duplicate of CASE-20260517-0001",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:32:19.895188+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0005",
+      "status": "DUPLICATE",
+      "created_at": "2026-05-17T16:32:54.566040+00:00",
+      "updated_at": "2026-05-17T16:32:54.566040+00:00",
+      "customer_message": "I want a refund now. Your service failed and I am very angry.",
+      "normalized_message": "i want a refund now. your service failed and i am very angry.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": "CASE-20260517-0002",
+      "assignee": null,
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace e9399cbd-9446-4a25-be17-dacce4beb12f",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T16:32:54.566040+00:00"
+        },
+        {
+          "step": "DUPLICATE",
+          "note": "Marked as duplicate of CASE-20260517-0002",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:32:54.566040+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0006",
+      "status": "ASSIGNED_TO_HUMAN",
+      "created_at": "2026-05-17T16:33:31.302196+00:00",
+      "updated_at": "2026-05-17T16:33:31.302196+00:00",
+      "customer_message": "We are a 120-person team and need enterprise pricing with CRM and WhatsApp integration.",
+      "normalized_message": "we are a 120-person team and need enterprise pricing with crm and whatsapp integration.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": null,
+      "assignee": "L2_SUPPORT_QUEUE",
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace 23d9bba7-e802-4496-993b-29e1f7523a33",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T16:33:31.302196+00:00"
+        },
+        {
+          "step": "TICKET_CREATED",
+          "note": "Case created in human support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:33:31.302196+00:00"
+        },
+        {
+          "step": "ASSIGNED_TO_HUMAN",
+          "note": "Assigned to L2 support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:33:31.302196+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0007",
+      "status": "DUPLICATE",
+      "created_at": "2026-05-17T16:34:06.104181+00:00",
+      "updated_at": "2026-05-17T16:34:06.104181+00:00",
+      "customer_message": "I paid yesterday but my account is still not activated. This is frustrating.",
+      "normalized_message": "i paid yesterday but my account is still not activated. this is frustrating.",
+      "intent": "customer_support",
+      "lead_score": 1,
+      "escalation_reason": "Tooling failure: ExceptionGroup",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": "CASE-20260517-0001",
+      "assignee": null,
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace b3105341-2f85-422a-af74-e62df69c4c28",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T16:34:06.104181+00:00"
+        },
+        {
+          "step": "DUPLICATE",
+          "note": "Marked as duplicate of CASE-20260517-0001",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:34:06.104181+00:00"
+        }
+      ]
+    },
+    {
+      "ticket_id": "CASE-20260517-0008",
+      "status": "ASSIGNED_TO_HUMAN",
+      "created_at": "2026-05-17T16:34:48.263214+00:00",
+      "updated_at": "2026-05-17T16:34:48.263214+00:00",
+      "customer_message": "We found a potential data breach and legal notice may follow. Escalate immediately.",
+      "normalized_message": "we found a potential data breach and legal notice may follow. escalate immediately.",
+      "intent": "escalate_issue",
+      "lead_score": 1,
+      "escalation_reason": "Policy escalation due to: legal_risk, security_risk",
+      "next_action": "Escalate to human queue",
+      "duplicate_of": null,
+      "assignee": "L2_SUPPORT_QUEUE",
+      "timeline": [
+        {
+          "step": "AI_DECISION_COMPLETE",
+          "note": "AI marked escalation=True for trace fdda3576-280a-427f-b0dd-6855c12496ad",
+          "actor": "ai_agent",
+          "ts": "2026-05-17T16:34:48.263214+00:00"
+        },
+        {
+          "step": "TICKET_CREATED",
+          "note": "Case created in human support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:34:48.263214+00:00"
+        },
+        {
+          "step": "ASSIGNED_TO_HUMAN",
+          "note": "Assigned to L2 support queue",
+          "actor": "workflow_engine",
+          "ts": "2026-05-17T16:34:48.263214+00:00"
         }
       ]
     }
